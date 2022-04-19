@@ -19,8 +19,8 @@ public class OTLanguage {
     Map<String, Boolean> BooleanMap = new HashMap<>();
     Map<String, String> StringMap = new HashMap<>();
     Map<String, Character> CharMap = new HashMap<>();
-    Map<String, Float> floatMap = new HashMap<>();
-    Map<String, Double> doubleMap = new HashMap<>();
+    Map<String, Float> FloatMap = new HashMap<>();
+    Map<String, Double> DoubleMap = new HashMap<>();
 
     public static void main(String[] args) {
 
