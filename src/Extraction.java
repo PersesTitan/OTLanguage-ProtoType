@@ -84,8 +84,8 @@ public class Extraction {
             double signValue = Double.parseDouble(number.get(i + 1));
 
             switch (sign) {
-                case "*": case "/+": d *= signValue; break;
-                case "/": d /= signValue; break;
+                case "*": d *= signValue; break;
+                case "/": case "/+": d /= signValue; break;
                 case "+": case "--": case "++": d += signValue; break;
                 case "-": case "+-": case "-+": d -= signValue; break;
                 case "/-": d = d / -signValue; break;
