@@ -4,13 +4,13 @@
 </br>
 
 ## 변수
->ㅇㅈㅇ (정수) int
->ㅇㅉㅇ (정수) long
->ㅇㅂㅇ (블린) boolean
->ㅇㅁㅇ (문자) String
->ㅇㄱㅇ (글짜) char
->ㅇㅅㅇ (실수) float
->ㅇㅆㅇ (실수) double
+>ㅇㅈㅇ (정수) int </br>
+>ㅇㅉㅇ (정수) long </br>
+>ㅇㅂㅇ (블린) boolean </br>
+>ㅇㅁㅇ (문자) String </br>
+>ㅇㄱㅇ (글짜) char </br>
+>ㅇㅅㅇ (실수) float </br>
+>ㅇㅆㅇ (실수) double </br>
 
 ---
 </br>
