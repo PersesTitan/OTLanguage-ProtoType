@@ -39,7 +39,7 @@ public class OTLanguage {
 
     public void setType(String text) {
         char c = text.trim().charAt(1);
-        String key = text.trim().substring(0, 2);
+        String key = text.trim().substring(0, 3);
         if (c == 'ㅈ') {
 
         } else if (c == 'ㅉ') {
