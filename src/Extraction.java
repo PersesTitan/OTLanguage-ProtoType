@@ -32,7 +32,6 @@ public class Extraction {
             String someText = total.substring(start, end);
 
             if (someText.trim().split(" ").length <= 1) {
-//                total.substring(start, end);
                 total = total.replace(someText, calculation(someText));
                 System.out.println("a : " +calculation(someText));
                 System.out.println("b : " +total);
@@ -72,8 +71,9 @@ public class Extraction {
     }
 
     /**
-     * @TODO 
-     *
+     * 숫자가 음수가 되면서 생기는 문제 해결
+     * @TODO (+) : +-, ++, +/, +*
+     * @TODO (-) : -+, --, -/, -*
      */
 
     public String calculation (List<String> number, List<String> text) {
@@ -81,27 +81,28 @@ public class Extraction {
         double d = Double.parseDouble(number.get(0));
         for (int i=0; i<text.size(); i++) {
             String sign = text.get(i).trim();
+            double signValue = Double.parseDouble(number.get(i + 1));
 
-            if (sign.equals("*"))  {
-                d *= Double.parseDouble(number.get(i + 1)); break;
-            } else if (sign.equals("/") || sign.equals("+/") || sign.equals(""))
+            if (sign.equals("*")) d *= signValue;
+            else if (sign.equals("/")) d /= signValue;
+            else if (sign.equals("+")) d += signValue;
+            else if (sign.equals("-")) d -= signValue;
 
-            switch (text.get(i).trim()) {
-                case "/":
-                case "+/": d /= Double.parseDouble(number.get(i + 1)); break;
-                case "+":
-                case "--": d += Double.parseDouble(number.get(i + 1)); break;
-                case "-":
-                case "-+": d -= Double.parseDouble(number.get(i + 1)); break;
-                case "+-": d = d - Double.parseDouble(number.get(i + 1)); break;
+            else if (sign.equals("+-")) d = d - signValue;
+            else if (sign.equals("--")) d += signValue;
+            else if (sign.equals("/-")) d = d / signValue;
+            else if (sign.equals("*-")) d = d * signValue;
 
-                default:
-                    try {
-                        throw new Exception();
-                    } catch (Exception e) {
-                        System.err.println("연산자 오류 발생!!");
-                    }
-                    break;
+            else if (sign.equals("++")) d += signValue;
+            else if (sign.equals("-+")) d -= signValue;
+            else if (sign.equals("/+")) d /= signValue;
+
+            else {
+                try {
+                    throw new Exception();
+                } catch (Exception e) {
+                    System.err.println("연산자 오류 발생!!");
+                }
             }
         }
         return Double.toString(d);
