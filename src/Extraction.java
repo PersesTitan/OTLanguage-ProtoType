@@ -83,26 +83,20 @@ public class Extraction {
             String sign = text.get(i).trim();
             double signValue = Double.parseDouble(number.get(i + 1));
 
-            if (sign.equals("*")) d *= signValue;
-            else if (sign.equals("/")) d /= signValue;
-            else if (sign.equals("+")) d += signValue;
-            else if (sign.equals("-")) d -= signValue;
-
-            else if (sign.equals("+-")) d = d - signValue;
-            else if (sign.equals("--")) d += signValue;
-            else if (sign.equals("/-")) d = d / signValue;
-            else if (sign.equals("*-")) d = d * signValue;
-
-            else if (sign.equals("++")) d += signValue;
-            else if (sign.equals("-+")) d -= signValue;
-            else if (sign.equals("/+")) d /= signValue;
-
-            else {
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    System.err.println("연산자 오류 발생!!");
-                }
+            switch (sign) {
+                case "*": case "/+": d *= signValue; break;
+                case "/": d /= signValue; break;
+                case "+": case "--": case "++": d += signValue; break;
+                case "-": case "+-": case "-+": d -= signValue; break;
+                case "/-": d = d / -signValue; break;
+                case "*-": d = d * -signValue; break;
+                default:
+                    try {
+                        throw new Exception();
+                    } catch (Exception e) {
+                        System.err.println("연산자 오류 발생!!");
+                    }
+                    break;
             }
         }
         return Double.toString(d);
