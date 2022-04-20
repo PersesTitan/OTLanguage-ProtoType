@@ -1,3 +1,6 @@
+package activity;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -5,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class Extraction {
 
-    public String extractionNumber(String text) {
+    public String extractionNumber(String text) throws IOException {
         String total = text;
         while (total.contains("(") || total.contains(")")) {
             if (total.lastIndexOf("(") != -1 && !total.contains(")")) {
@@ -26,31 +29,22 @@ public class Extraction {
                 }
             }
 
-            System.out.println("text = " + total);
             int start = total.lastIndexOf("(");
             int end = total.indexOf(")") + 1;
             String someText = total.substring(start, end);
 
             if (someText.trim().split(" ").length <= 1) {
                 total = total.replace(someText, calculation(someText));
-                System.out.println("a : " +calculation(someText));
-                System.out.println("b : " +total);
                 return total;
             } else {
                 total = total.replace(someText, calculation(someText));
-                System.out.println("text = " + total);
-
-                System.out.println("a" +calculation(someText));
-                System.out.println("b" +total);
             }
-
-         System.out.println(total);
         }
 
         return total;
     }
 
-    public String calculation (String text) {
+    public String calculation (String text) throws IOException {
         text = text.replaceAll("\\)", "");
         text = text.replaceAll("\\(", "");
 
@@ -62,11 +56,6 @@ public class Extraction {
                 .stream(texts).filter(t -> !t.trim().equals(""))
                 .collect(Collectors.toList());
 
-        System.out.println("=====================");
-        textList.forEach(System.out::println);
-        number.forEach(System.out::println);
-        System.out.println("=====================");
-
         return calculation(number, textList);
     }
 
@@ -76,7 +65,7 @@ public class Extraction {
      * @TODO (-) : -+, --, -/, -*
      */
 
-    public String calculation (List<String> number, List<String> text) {
+    public String calculation (List<String> number, List<String> text) throws IOException {
         assert number.size()+1 == text.size();
         double d = Double.parseDouble(number.get(0));
         for (int i=0; i<text.size(); i++) {
@@ -84,19 +73,13 @@ public class Extraction {
             double signValue = Double.parseDouble(number.get(i + 1));
 
             switch (sign) {
-                case "*": case "/+": d *= signValue; break;
-                case "/": d /= signValue; break;
+                case "*": d *= signValue; break;
+                case "/": case "/+": d /= signValue; break;
                 case "+": case "--": case "++": d += signValue; break;
                 case "-": case "+-": case "-+": d -= signValue; break;
                 case "/-": d = d / -signValue; break;
                 case "*-": d = d * -signValue; break;
-                default:
-                    try {
-                        throw new Exception();
-                    } catch (Exception e) {
-                        System.err.println("연산자 오류 발생!!");
-                    }
-                    break;
+                default: throw new IOException("연산자 오류 발생");
             }
         }
         return Double.toString(d);

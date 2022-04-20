@@ -1,60 +1,70 @@
+import activity.ActivityPrint;
+import main.Setting;
+import main.variable.VariableGet;
+import main.variable.VariableSet;
+
+import java.io.File;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class OTLanguage {
-    /**
-     * @param ㅇㅈㅇ (정수) int
-     * @param ㅇㅉㅇ (정수) long
-     * @param ㅇㅂㅇ (블린) boolean
-     * @param ㅇㅁㅇ (문자) String
-     * @param ㅇㄱㅇ (글짜) char
-     * @param ㅇㅅㅇ (실수) float
-     * @param ㅇㅆㅇ (실수) double
-     */
 
-    String totalText = null;
-    List<String> list = new ArrayList<>();
+    private static String totalString;
 
-    Map<String, Integer> IntMap = new HashMap<>();
-    Map<String, Long> LongMap = new HashMap<>();
-    Map<String, Boolean> BooleanMap = new HashMap<>();
-    Map<String, String> StringMap = new HashMap<>();
-    Map<String, Character> CharMap = new HashMap<>();
-    Map<String, Float> floatMap = new HashMap<>();
-    Map<String, Double> doubleMap = new HashMap<>();
+    public static void main(String[] args) throws IOException {
 
-    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("파일 이름 입력: ");
+        String fileName = scanner.next();
 
-        String text = "1+(123-300*342)+123";
-        Extraction extraction = new Extraction();
-        System.out.println(extraction.extractionNumber(text));
-    }
-
-    public void setTrim() {
-        list.clear();
-        String[] texts = totalText.split("\\n");
-        for (String text : texts) {
-            if (!text.trim().equals("")) list.add(text.trim());
-        }
-    }
-
-    public void setType(String text) {
-        char c = text.trim().charAt(1);
-        String key = text.trim().substring(0, 2);
-        if (c == 'ㅈ') {
-
-        } else if (c == 'ㅉ') {
-
-        } else if (c == 'ㅂ') {
-
-        } else if (c == 'ㅁ') {
-
-        } else if (c == 'ㄱ') {
-
-        } else if (c == 'ㅅ') {
-
-        } else if (c == 'ㅆ') {
-
+//        if (args.length <= 0) throw new IOException("파일 이름을 입력히주세요.");
+        File file = new File("../" + fileName);
+        if (!file.getName().toLowerCase(Locale.ROOT).endsWith(".otl")) {
+            throw new IOException("확장자를 읽을 수 없습니다.");
         }
 
+        if (!file.canRead()) throw new IOException("파일을 읽을 수 없습니다.");
+
+//        String text =
+//                "1+(123-300*342)+123\n" +
+//                "ㅇㅅㅇ 100\n" +
+//                "운 :ㅇㅅㅇ 출력 하기\n" +
+//                "otl otl\n" +
+//                "OTL OTL\n";
+
+//        Setting setting = new Setting(args[0]);
+
+        totalString = "";
+        Path path = Paths.get("../" + fileName);
+        Charset cs = StandardCharsets.UTF_8;
+        List<String> list = new ArrayList<>();
+        list = Files.readAllLines(path, cs);
+        list.forEach(string -> totalString += (string + "\n"));
+
+        ActivityPrint print = new ActivityPrint();
+        VariableGet variableGet = new VariableGet();
+        VariableSet variableSet = new VariableSet();
+        Setting setting = new Setting(totalString);
+
+        Setting.map.clear();
+        setting.setTrim();
+
+        System.out.println("===================출력===================");
+        Setting.list.forEach(object -> {
+            if (variableSet.check(object)) {
+                variableSet.setVariable(object);
+            } else if (print.check(object)) {
+                print.print(object);
+            }
+        });
+
+//        Extraction extraction = new Extraction();
+//        System.out.println(extraction.extractionNumber(text));
     }
 }
