@@ -19,9 +19,10 @@ public class OTLanguage {
 
     public static void main(String[] args) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("파일 이름 입력: ");
-        String fileName = scanner.next();
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("파일 이름 입력: ");
+//        String fileName = scanner.next();
+        String fileName = "start.otl";
 
 //        if (args.length <= 0) throw new IOException("파일 이름을 입력히주세요.");
         File file = new File("../" + fileName);
@@ -30,15 +31,6 @@ public class OTLanguage {
         }
 
         if (!file.canRead()) throw new IOException("파일을 읽을 수 없습니다.");
-
-//        String text =
-//                "1+(123-300*342)+123\n" +
-//                "ㅇㅅㅇ 100\n" +
-//                "운 :ㅇㅅㅇ 출력 하기\n" +
-//                "otl otl\n" +
-//                "OTL OTL\n";
-
-//        Setting setting = new Setting(args[0]);
 
         totalString = "";
         Path path = Paths.get("../" + fileName);
@@ -58,13 +50,19 @@ public class OTLanguage {
         System.out.println("===================출력===================");
         Setting.list.forEach(object -> {
             if (variableSet.check(object)) {
-                variableSet.setVariable(object);
+                try {
+                    variableSet.setVariable(object);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (print.check(object)) {
-                print.print(object);
+                try {
+                    print.print(object);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-//        Extraction extraction = new Extraction();
-//        System.out.println(extraction.extractionNumber(text));
     }
 }
