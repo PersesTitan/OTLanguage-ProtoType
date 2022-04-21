@@ -1,60 +1,74 @@
 package activity;
 
+import Item.Check;
+import main.Setting;
+import main.variable.VariableGet;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Extraction {
+public class Extraction implements Check {
+
+    public String getNumber(String text) throws IOException {
+
+        //ex - input : 운 ((100 + 100) * 20) 출력하기
+        String total = text;
+        int firstPosition = total.indexOf("(");
+        int endPosition = total.lastIndexOf(")") + 1;
+        total = total.substring(firstPosition, endPosition);
+        //ex - output : ((100 + 100) * 20)
+
+        //괄호가 존재할때만 돌리기
+        while (total.contains("(") && total.contains(")")) {
+            int start = total.lastIndexOf("(");
+            int end = total.indexOf(")") + 1;
+            String someText = total.substring(start, end);
+            //ex - someText Output : (100 + 100)
+
+
+        }
+
+        return null;
+    }
 
     public String extractionNumber(String text) throws IOException {
         String total = text;
-        while (total.contains("(") || total.contains(")")) {
-            if (total.lastIndexOf("(") != -1 && !total.contains(")")) {
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    System.err.println("문법 오류");
-                    System.err.print("괄호 갯수가 맞지 않습니다.");
-                    break;
-                }
-            } else if (total.lastIndexOf("(") == -1 && total.contains(")")) {
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    System.err.println("문법 오류");
-                    System.err.print("괄호 갯수가 맞지 않습니다.");
-                    break;
-                }
-            }
 
+        while (total.contains("(") && total.contains(")")) {
             int start = total.lastIndexOf("(");
             int end = total.indexOf(")") + 1;
             String someText = total.substring(start, end);
 
-            if (someText.trim().split(" ").length <= 1) {
-                total = total.replace(someText, calculation(someText));
-                return total;
-            } else {
-                total = total.replace(someText, calculation(someText));
-            }
+            total = total.replace(someText, calculation(someText));
         }
+
+        if (total.contains("(") && !total.contains(")")) throw new IOException("소괄호의 짝이 맞지 않습니다.");
+        else if (!total.contains("(") && total.contains(")")) throw new IOException("소괄호의 짝이 맞지 않습니다.");
 
         return total;
     }
 
-    public String calculation (String text) throws IOException {
+    private String calculation (String text) throws IOException {
         text = text.replaceAll("\\)", "");
         text = text.replaceAll("\\(", "");
 
-        String[] texts = text.replaceAll("[0-9]", " ").split(" ");
-        String[] numbers = text.split("\\+|-|\\*|\\/");
+        VariableGet variableGet = new VariableGet();
+        if (variableGet.check(text)) text = variableGet.setVariable(text);
 
-        List<String> number = Arrays.asList(numbers);
-        List<String> textList = Arrays
-                .stream(texts).filter(t -> !t.trim().equals(""))
-                .collect(Collectors.toList());
+        String[] texts = text.replaceAll("[0-9|.|\" \"]", ",").split(",");
+        String[] numbers = text.replaceAll("[^0-9|.|\" \"]", ",").split(",");
+
+        List<String> number = new ArrayList<>(Arrays.asList(numbers));
+        List<String> textList = new ArrayList<>(Arrays.asList(texts));
+
+        number.removeAll(Collections.singletonList(""));
+        number.removeAll(Collections.singletonList(null));
+        textList.removeAll(Collections.singletonList(""));
+        textList.removeAll(Collections.singletonList(null));
 
         return calculation(number, textList);
     }
@@ -65,8 +79,9 @@ public class Extraction {
      * @TODO (-) : -+, --, -/, -*
      */
 
-    public String calculation (List<String> number, List<String> text) throws IOException {
+    private String calculation (List<String> number, List<String> text) throws IOException {
         assert number.size()+1 == text.size();
+
         double d = Double.parseDouble(number.get(0));
         for (int i=0; i<text.size(); i++) {
             String sign = text.get(i).trim();
@@ -79,9 +94,14 @@ public class Extraction {
                 case "-": case "+-": case "-+": d -= signValue; break;
                 case "/-": d = d / -signValue; break;
                 case "*-": d = d * -signValue; break;
-                default: throw new IOException("연산자 오류 발생");
+                default: throw new IOException("연산자 오류 발생" + sign);
             }
         }
         return Double.toString(d);
+    }
+
+    @Override
+    public boolean check(String text) {
+        return text.contains("(") && text.contains(")");
     }
 }
