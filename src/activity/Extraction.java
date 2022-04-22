@@ -3,6 +3,7 @@ package activity;
 import Item.Check;
 import main.Setting;
 import main.variable.VariableGet;
+import main.variable.VariableSet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ public class Extraction implements Check {
 
     public String extractionNumber(String text) throws IOException {
         String total = text;
-
         while (total.contains("(") && total.contains(")")) {
             int start = total.lastIndexOf("(");
             int end = total.indexOf(")") + 1;
@@ -52,22 +52,24 @@ public class Extraction implements Check {
         return total;
     }
 
+    VariableGet variableGet = new VariableGet();
     private String calculation (String text) throws IOException {
         text = text.replaceAll("\\)", "");
         text = text.replaceAll("\\(", "");
 
-        VariableGet variableGet = new VariableGet();
         if (variableGet.check(text)) text = variableGet.setVariable(text);
 
-        String[] texts = text.replaceAll("[0-9|.|\" \"]", ",").split(",");
-        String[] numbers = text.replaceAll("[^0-9|.|\" \"]", ",").split(",");
+        String[] texts = text.replaceAll("[0-9|.]",",").split(",");
+        String[] numbers = text.replaceAll("[^0-9|.]", ",").split(",");
 
         List<String> number = new ArrayList<>(Arrays.asList(numbers));
         List<String> textList = new ArrayList<>(Arrays.asList(texts));
 
         number.removeAll(Collections.singletonList(""));
+        number.removeAll(Collections.singletonList(" "));
         number.removeAll(Collections.singletonList(null));
         textList.removeAll(Collections.singletonList(""));
+        textList.removeAll(Collections.singletonList(" "));
         textList.removeAll(Collections.singletonList(null));
 
         return calculation(number, textList);

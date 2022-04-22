@@ -1,7 +1,9 @@
 package main;
 
 import Item.TextType;
+import main.variable.VariableSet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +22,13 @@ public class Setting {
 
     String totalText;
     public static List<String> list = new ArrayList<>();
-    public static Map<String, Object> map = new HashMap<>();
+    public static volatile Map<String, Object> map = new HashMap<>();
 
     public Setting() {}
 
-    public Setting(String totalText) {
+    public Setting(String totalText) throws IOException {
+        VariableSet variableSet = new VariableSet();
+//        if (variableSet.check(totalText)) variableSet.setVariable(totalText);
         this.totalText = totalText;
     }
 

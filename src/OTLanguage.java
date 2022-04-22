@@ -35,14 +35,13 @@ public class OTLanguage {
         totalString = "";
         Path path = Paths.get("../" + fileName);
         Charset cs = StandardCharsets.UTF_8;
-        List<String> list = new ArrayList<>();
-        list = Files.readAllLines(path, cs);
+        List<String> list = Files.readAllLines(path, cs);
         list.forEach(string -> totalString += (string + "\n"));
 
+        Setting setting = new Setting(totalString);
         ActivityPrint print = new ActivityPrint();
         VariableGet variableGet = new VariableGet();
         VariableSet variableSet = new VariableSet();
-        Setting setting = new Setting(totalString);
 
         Setting.map.clear();
         setting.setTrim();
@@ -52,15 +51,11 @@ public class OTLanguage {
             if (variableSet.check(object)) {
                 try {
                     variableSet.setVariable(object);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException ignored) {}
             } else if (print.check(object)) {
                 try {
                     print.print(object);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException ignored) {}
             }
         });
 
