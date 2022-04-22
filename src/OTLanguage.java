@@ -22,15 +22,30 @@ public class OTLanguage {
 
     public static void main(String[] args) throws IOException {
 
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("파일 이름 입력: ");
-//        String fileName = scanner.next();
-        String fileName = "start.otl";
+        String fileName;
+        File file;
+
+        //파일 읽기
+        if (args.length <= 0) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("파일 이름 입력: ");
+            fileName = scanner.next();
+            file = new File("../" + fileName);
+            while (!file.canRead()) {
+                System.out.println("\n파일을 읽을 수 없습니다. 다시 입력해주세요.");
+                System.out.print("파일 이름 입력: ");
+                fileName = scanner.next();
+                file = new File("../" + fileName);
+            }
+        } else {
+            fileName = args[0];
+            file = new File(fileName);
+        }
 
 //        if (args.length <= 0) throw new IOException("파일 이름을 입력히주세요.");
-        File file = new File("../" + fileName);
+
         if (!file.getName().toLowerCase(Locale.ROOT).endsWith(".otl")) {
-            throw new IOException("확장자를 읽을 수 없습니다.");
+            throw new IOException("확장자를 읽을 수 없습니다. 확장자는 .otl 이여야 합니다.");
         }
 
         if (!file.canRead()) throw new IOException("파일을 읽을 수 없습니다.");

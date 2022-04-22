@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SearchType {
+public class SearchType implements Check {
 
     public void getType(@NotNull String oneLine) {
         String[] words = oneLine.split(" ");
@@ -17,4 +17,8 @@ public class SearchType {
     }
 
 
+    @Override
+    public boolean check(String text) {
+        return false;
+    }
 }
