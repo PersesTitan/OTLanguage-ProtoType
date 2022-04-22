@@ -16,6 +16,9 @@ import java.util.*;
 public class OTLanguage {
 
     private static String totalString;
+    private static ActivityPrint print = new ActivityPrint();
+    private static VariableGet variableGet = new VariableGet();
+    private static VariableSet variableSet = new VariableSet();
 
     public static void main(String[] args) throws IOException {
 
@@ -38,13 +41,11 @@ public class OTLanguage {
         List<String> list = Files.readAllLines(path, cs);
         list.forEach(string -> totalString += (string + "\n"));
 
-        Setting setting = new Setting(totalString);
-        ActivityPrint print = new ActivityPrint();
-        VariableGet variableGet = new VariableGet();
-        VariableSet variableSet = new VariableSet();
+//        Setting setting = new Setting(totalString);
 
         Setting.map.clear();
-        setting.setTrim();
+//        setting.setTrim();
+        Setting.list.addAll(setTrim(totalString));
 
         System.out.println("===================출력===================");
         Setting.list.forEach(object -> {
@@ -59,5 +60,20 @@ public class OTLanguage {
             }
         });
 
+    }
+
+    private static List<String> setTrim(String totalText) throws IOException {
+        List<String> stringList = new ArrayList<>();
+        String[] texts = totalText.split("\\n");
+        for (String text : texts) {
+            text = text.trim();
+            if (!text.isBlank()) {
+                variableSet.setVariable(text);
+                if (variableGet.check(text)) stringList.add(variableGet.setVariable(text));
+                else stringList.add(text);
+            }
+        }
+
+        return stringList;
     }
 }

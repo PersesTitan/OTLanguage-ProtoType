@@ -16,6 +16,7 @@ public class Extraction implements Check {
 
     public String getNumber(String text) throws IOException {
 
+
         //ex - input : 운 ((100 + 100) * 20) 출력하기
         String total = text;
         int firstPosition = total.indexOf("(");

@@ -35,6 +35,8 @@ public class ActivityPrint extends Setting implements Check {
             }
         }
 
+//        System.out.println("text = " + list);
+
         total = "";
         list.remove(0);
         list.forEach(object -> total += (object + " "));
@@ -42,6 +44,7 @@ public class ActivityPrint extends Setting implements Check {
 //        if (variableSet.check(total)) variableSet.setVariable(total);
         //변수나 상수를 숫자로 치환시킴
         if (variableGet.check(total)) total = variableGet.setVariable(total);
+//        System.out.println("object = " + total);
         //계산이 존재할 시 계산을 진행함
         if (extraction.check(total)) total = extraction.extractionNumber(total);
 

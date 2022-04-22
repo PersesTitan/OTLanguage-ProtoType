@@ -1,8 +1,5 @@
 package main;
 
-import Item.TextType;
-import main.variable.VariableSet;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +24,6 @@ public class Setting {
     public Setting() {}
 
     public Setting(String totalText) throws IOException {
-        VariableSet variableSet = new VariableSet();
-//        if (variableSet.check(totalText)) variableSet.setVariable(totalText);
         this.totalText = totalText;
     }
 

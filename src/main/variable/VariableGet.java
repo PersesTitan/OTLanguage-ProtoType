@@ -12,7 +12,6 @@ public class VariableGet extends Setting implements Check {
     //:를 사용하였을때 변수나 상수를 값으로 치환
     public String setVariable (@NotNull String text) throws IOException {
         //total -> 운 (:ㅇㅅㅇ + :ㅂㅅㅂ)
-
         String total = text;
         //saves -> [운, (:ㅇㅅㅇ, +, :ㅂㅅㅂ)]
         String[] saves = total.split(" ");
@@ -21,7 +20,8 @@ public class VariableGet extends Setting implements Check {
 
                 //(:ㅇㅅㅇ, :ㅂㅅㅂ)
                 save = save.trim();
-                save = save.replaceAll(";", "");
+                save = save.replaceAll(";", "")
+                        .replaceAll("\\)", "").replaceAll("\\(", "");
 //                int position = getPosition(total);
                 int position = total.indexOf(":");
                 //position -> 각각 3, 10
