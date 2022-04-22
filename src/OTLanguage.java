@@ -16,9 +16,9 @@ import java.util.*;
 public class OTLanguage {
 
     private static String totalString;
-    private static ActivityPrint print = new ActivityPrint();
-    private static VariableGet variableGet = new VariableGet();
-    private static VariableSet variableSet = new VariableSet();
+    private static final ActivityPrint print = new ActivityPrint();
+    private static final VariableGet variableGet = new VariableGet();
+    private static final VariableSet variableSet = new VariableSet();
 
     public static void main(String[] args) throws IOException {
 
