@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="OTLanguage_jar2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/OTLanguage_jar2/OTLanguage.jar.zip!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/OTLanguage_jar2/OTLanguage.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
