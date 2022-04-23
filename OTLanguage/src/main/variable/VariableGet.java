@@ -1,6 +1,7 @@
 package main.variable;
 
 import Item.Check;
+import com.sun.security.jgss.GSSUtil;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import main.Setting;
 
@@ -34,10 +35,6 @@ public class VariableGet extends Setting implements Check {
 
     public Object getVariable (@NotNull String text) {
         text = text.trim().replaceAll(":", "").replaceAll(";", "");
-//        int position = getPosition(text);
-//        int position = text.indexOf(":");
-//        String key = text.substring(position+1, position+4);
-//        String key  = text.substring(position+1);
         return Setting.map.get(text);
     }
 
@@ -48,7 +45,12 @@ public class VariableGet extends Setting implements Check {
     @Override
     public boolean check(String text) {
         if (text.isBlank()) return false;
-//        return text.charAt(1) == ':';
-        return text.contains(":");
+        return checked(text) && text.contains(":");
+    }
+
+    private boolean checked (String text) {
+        boolean bool = text.contains("ㅈ") || text.contains("ㅉ") || text.contains("ㅂ");
+        bool = bool || text.contains("ㅁ") || text.contains("ㄱ") || text.contains("ㅅ");
+        return bool || text.contains("ㅆ");
     }
 }

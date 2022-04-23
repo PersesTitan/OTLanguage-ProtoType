@@ -1,4 +1,5 @@
 import activity.ActivityPrint;
+import main.For;
 import main.Setting;
 import main.variable.VariableGet;
 import main.variable.VariableSet;
@@ -15,16 +16,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static main.Setting.play;
+import static main.Setting.setForCount;
+
 public class OTLanguage {
 
-    private static String totalString;
-    private static final ActivityPrint print = new ActivityPrint();
-    private static final VariableGet variableGet = new VariableGet();
-    private static final VariableSet variableSet = new VariableSet();
+//    private static final ActivityPrint print = new ActivityPrint();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
         boolean check = true;
+
+        args = new String[1];
+        args[0] = "start.otl";
 
         start(args);
         while (check)  {
@@ -39,7 +43,7 @@ public class OTLanguage {
         String fileName;
         File file;
 
-        totalString = "";
+        Setting.totalString = "";
         //파일 읽기
         if (args.length <= 0) {
             System.out.print("파일 이름 입력: ");
@@ -56,54 +60,20 @@ public class OTLanguage {
             Path path = Paths.get("./" + fileName);
             Charset cs = StandardCharsets.UTF_8;
             List<String> list = Files.readAllLines(path, cs);
-            list.forEach(string -> totalString += (string + "\n"));
+            list.forEach(string -> Setting.totalString += (string + "\n"));
         } else {
             fileName = args[0];
             BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8));
             String readerString;
-            while ((readerString = reader.readLine()) != null) totalString += (readerString + "\n");
+            while ((readerString = reader.readLine()) != null) Setting.totalString += (readerString + "\n");
             reader.close();
         }
 
-//        if (args.length <= 0) throw new IOException("파일 이름을 입력히주세요.");
-
-
-
-
-
-
-//        Setting setting = new Setting(totalString);
-
         Setting.map.clear();
-//        setting.setTrim();
-        Setting.list.addAll(setTrim(totalString));
+        Setting.list.addAll(Setting.setTrim(Setting.totalString));
 
         System.out.println("===================출력===================");
-        Setting.list.forEach(object -> {
-            if (variableSet.check(object)) {
-                try {
-                    variableSet.setVariable(object);
-                } catch (IOException ignored) {}
-            } else if (print.check(object)) {
-                try {
-                    print.print(object);
-                } catch (IOException ignored) {}
-            }
-        });
-    }
-
-    private static List<String> setTrim(String totalText) throws IOException {
-        List<String> stringList = new ArrayList<>();
-        String[] texts = totalText.split("\\n");
-        for (String text : texts) {
-            text = text.trim();
-            if (!text.isBlank()) {
-                variableSet.setVariable(text);
-                if (variableGet.check(text)) stringList.add(variableGet.setVariable(text));
-                else stringList.add(text);
-            }
-        }
-
-        return stringList;
+        setForCount();
+        play(Setting.totalString);
     }
 }

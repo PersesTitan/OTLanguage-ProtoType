@@ -64,9 +64,8 @@ public class ActivityPrint extends Setting implements Check {
 
     @Override
     public boolean check(String text) {
-        String[] texts = text.trim().split(" ");
-        boolean bool = texts[0].equals("ㅇㅜㄴ") || texts[0].equals("운");
-        bool = bool || texts[0].toLowerCase(Locale.ROOT).equals("otl");
+        boolean bool = text.trim().startsWith("ㅇㅜㄴ") || text.trim().startsWith("운");
+        bool = bool || text.toLowerCase(Locale.ROOT).equals("otl");
         return bool;
     }
 }
