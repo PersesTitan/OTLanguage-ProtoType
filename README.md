@@ -1,4 +1,4 @@
-# OTLanguage
+# OTLanguage <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FPersesTitan%2FOTLanguage&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 
 직접 자신만의 언어를 1개 만들어 보고 싶었는데 만드는 법을 몰라서 일단 제가 생각해본 만들어 보았습니다. 이게 맞는지는 잘모르겠지만요;;</br>
 언어의 의미는 OTL (절망) 하는 아이콘을 모티브로 한 것이지만 다양한 이모티콘을 섞었습니다.</br>
