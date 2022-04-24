@@ -17,15 +17,18 @@ public class For implements Check {
 
         String[] TotalTexts = TotalText.split("\\n");
         //리스트 반전
-        List<String> list1 = Arrays.asList(TotalTexts);
-        Collections.reverse(list1);
-        String[] TotalTextsReverse = list1.toArray(TotalTexts);
+//        List<String> list1 = Arrays.asList(TotalTexts);
+//        Collections.reverse(list1);
+//        String[] TotalTextsReverse = list1.toArray(TotalTexts);
 
-        for (String totalText : TotalTextsReverse) {
+        for (String totalText : TotalTexts) {
             if (!totalText.isBlank() && totalText.contains("ㅇㅍㅇ")) {
                 totalText = totalText.trim();
                 //for 문 아이디 추출
-                String text1 =  totalText.substring(0, totalText.lastIndexOf("ㅇㅍㅇ")+3).trim();
+//                String text1 =  totalText.substring(0, totalText.lastIndexOf("ㅇㅍㅇ")+3).trim();
+//                String text2 =  totalText.substring(0, text1.length()).trim();
+
+                String text1 =  totalText.substring(0, totalText.indexOf("ㅇㅍㅇ")+3).trim();
                 String text2 =  totalText.substring(0, text1.length()).trim();
 
                 int firstTextPosition = TotalText.indexOf(text1);
@@ -64,9 +67,7 @@ public class For implements Check {
                 //추가 및 저장후 아이디로 변경
                 Setting.forList.add(new ForItem(uuid, totalText, number_1, number_2, number_3));
                 Setting.totalString = Setting.totalString.replace(texts, uuid);
-//                if (check(totalText)) {
-//                    System.out.println(totalText);
-//                }
+
             }
         }
     }
