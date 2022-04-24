@@ -11,10 +11,10 @@ import static main.Setting.totalString;
 
 public class For implements Check {
 
-    String totalText = "";
-    public void saveFor(String TotalText) throws IOException {
-//        Setting.forList.clear();
-        List<StartEndItem> startEndItemList = new ArrayList<>();
+    List<StartEndItem> startEndItemList = new ArrayList<>();
+
+    private void addStart(String TotalText) throws IOException {
+
         String[] TotalTexts = TotalText.split("\\n");
         //리스트 반전
         List<String> list1 = Arrays.asList(TotalTexts);
@@ -35,16 +35,17 @@ public class For implements Check {
                 startEndItemList.add(new StartEndItem(firstTextPosition, secondTextPosition));
             }
         }
+    }
 
+    String totalText = "";
+//    startEndItemList.clear();
+    public void saveFor(String TotalText) throws IOException {
+        addStart(TotalText);
         for (StartEndItem startEndItem : startEndItemList) {
             int start = startEndItem.getFirst();
             int end = startEndItem.getSecond();
-
             //for 문 아이디 생성
             String uuid = UUID.randomUUID().toString();
-
-//            String seText = TotalText.substring(start, end + 3);
-
             //for 문 동작 후 삭제할 문장
             String texts = TotalText.substring(start, end);
             List<String> list = Setting.setTrim(texts);
@@ -56,26 +57,16 @@ public class For implements Check {
                 int number_2 = getNumber(firstText[1]);
                 int number_3 = getNumber(firstText[2]);
                 totalText = "";
-
                 //ㅇㅍㅇ 삭제
                 list.remove(0);
                 list.remove(list.size()-1);
                 list.forEach(o -> totalText += (o + "\n"));
-
-//                System.out.println("--------------");
-//                System.out.println(seText);
-//                System.out.println("--------------");
-//                System.out.println("totalText = " + totalText);
-
                 //추가 및 저장후 아이디로 변경
                 Setting.forList.add(new ForItem(uuid, totalText, number_1, number_2, number_3));
                 Setting.totalString = Setting.totalString.replace(texts, uuid);
-
-//                System.out.println("--------------");
-//                System.out.println(Setting.totalString);
-//                System.out.println("--------------");
-
-//            for (int i = number_1; i <number_2; i+=number_3) Setting.play(list, totalText);
+//                if (check(totalText)) {
+//                    System.out.println(totalText);
+//                }
             }
         }
     }
@@ -83,7 +74,6 @@ public class For implements Check {
     public void playFor(String uuid) throws IOException {
         List<ForItem> list = new ArrayList<>(Setting.forList);
         for (ForItem forItem : list) {
-            
             if (uuid.contains(forItem.getId())) {
                 try {
                     if (check(forItem.getValue())) saveFor(forItem.getValue());
@@ -129,9 +119,6 @@ public class For implements Check {
         bool = false;
         List<ForItem> list = new ArrayList<>(Setting.forList);
         list.forEach(item -> bool = bool || item.getId().contains(text));
-//        for (int i = 0; i<forList.size(); i++) {
-//            if (forList.get(i).getId().contains(text)) return true;
-//        }
         return bool;
     }
 

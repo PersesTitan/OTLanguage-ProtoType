@@ -26,7 +26,7 @@ public class Setting {
     public static String totalString;
     public static List<String> list = new ArrayList<>();
     public static List<ForItem> forList = new ArrayList<>();
-    
+
     public static volatile Map<String, VarItem> map = new HashMap<>();
 
     public Setting() {}
@@ -38,14 +38,6 @@ public class Setting {
     public void setReset() {
         map.clear();
     }
-
-//    public void setTrim() {
-//        list.clear();
-//        String[] texts = totalText.split("\\n");
-//        for (String text : texts) {
-//            if (!text.trim().equals("")) list.add(text.trim());
-//        }
-//    }
 
     public static boolean[] forCountCheck;
     public static String[] forCountText;
@@ -59,7 +51,6 @@ public class Setting {
         VariableSet variableSet = new VariableSet();
         For fore = new For();
 
-//        if (fore.check(totalText)) fore.startFor(totalText);
         if (fore.check(totalText)) fore.saveFor(totalText);
         list.forEach(object -> {
             if (variableSet.check(object)) {
