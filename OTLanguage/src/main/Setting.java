@@ -1,5 +1,6 @@
 package main;
 
+import Item.VarItem;
 import activity.ActivityPrint;
 import main.variable.VariableGet;
 import main.variable.VariableSet;
@@ -23,7 +24,7 @@ public class Setting {
     String totalText;
     public static String totalString;
     public static List<String> list = new ArrayList<>();
-    public static volatile Map<String, Object> map = new HashMap<>();
+    public static volatile Map<String, VarItem> map = new HashMap<>();
 
     public Setting() {}
 
@@ -54,8 +55,8 @@ public class Setting {
         VariableSet variableSet = new VariableSet();
         For fore = new For();
 
-//        if (fore.check(totalText)) fore.startFor(totalText);
         if (fore.check(totalText)) fore.startFor(totalText);
+//        if (fore.check(totalText)) fore.startFor(totalText);
         list.forEach(object -> {
             if (variableSet.check(object)) {
                 try {

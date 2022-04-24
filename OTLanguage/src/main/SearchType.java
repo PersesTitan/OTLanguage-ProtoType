@@ -1,7 +1,6 @@
 package main;
 
 import Item.Check;
-import Item.TextType;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;

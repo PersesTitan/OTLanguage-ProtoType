@@ -1,9 +1,7 @@
 package activity;
 
 import Item.Check;
-import main.Setting;
 import main.variable.VariableGet;
-import main.variable.VariableSet;
 
 import java.io.IOException;
 import java.util.ArrayList;

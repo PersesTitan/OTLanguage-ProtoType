@@ -12,9 +12,11 @@ public class For implements Check {
         int start = TotalText.indexOf("ㅇㅍㅇ");
         int end = TotalText.lastIndexOf("ㅇㅍㅇ");
 
+        //for 문 동작 후 삭제할 문장
+        String seText = TotalText.substring(start, end + 3);
+
         String texts = TotalText.substring(start, end);
         List<String> list = Setting.setTrim(texts);
-
 
         if (check(list.get(0)) && list.get(0).contains(",")) {
             String[] firstText = list.get(0).trim().split(",");
@@ -26,9 +28,8 @@ public class For implements Check {
             list.remove(0);
             list.forEach(o -> totalText += o);
 
-            for (int i = number_1; i <number_2; i+=number_3) {
-                Setting.play(list, totalText);
-            }
+            for (int i = number_1; i <number_2; i+=number_3) Setting.play(list, totalText);
+            Setting.totalString = Setting.totalString.replace(seText, "");
         } else throw new IOException("예기치 못한 에러가 발생하였습니다.");
     }
 

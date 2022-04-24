@@ -1,8 +1,4 @@
-import activity.ActivityPrint;
-import main.For;
 import main.Setting;
-import main.variable.VariableGet;
-import main.variable.VariableSet;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -69,6 +65,7 @@ public class OTLanguage {
             reader.close();
         }
 
+        // totalString
         Setting.map.clear();
         Setting.list.addAll(Setting.setTrim(Setting.totalString));
 

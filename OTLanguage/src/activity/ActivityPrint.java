@@ -1,17 +1,17 @@
 package activity;
 
 import Item.Check;
+import Item.TextType;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import main.Setting;
 import main.variable.VariableGet;
 import main.variable.VariableSet;
+import main.variable.VariableType;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 public class ActivityPrint extends Setting implements Check {
 
@@ -21,7 +21,6 @@ public class ActivityPrint extends Setting implements Check {
     String total = "";
 
     public void print(@NotNull String text) throws IOException {
-
         //ex - input : ((100 + 200)*30)
         text = text.replaceAll(";", "");
         String[] texts = text.split(" ");
@@ -34,9 +33,7 @@ public class ActivityPrint extends Setting implements Check {
                 } else list.add(str);
             }
         }
-
 //        System.out.println("text = " + list);
-
         total = "";
         list.remove(0);
         list.forEach(object -> total += (object + " "));
@@ -52,14 +49,20 @@ public class ActivityPrint extends Setting implements Check {
     }
 
     private Object getValue(String key) throws IOException {
+        VariableType variableType = new VariableType();
         if (extraction.check(key)) {
             key = key.replaceAll(";", "");
-            if (key.contains(")")) return map.get(key.replaceAll("\\)", "")).toString().trim()+")";
-            else if (key.contains("(")) return "(" + map.get(key.replaceAll("\\(", "")).toString().trim();
+//            if (key.contains(")")) return map.get(key.replaceAll("\\)", "")).getValue().toString().trim()+")";
+//            else if (key.contains("(")) return "(" + map.get(key.replaceAll("\\(", "")).getValue().toString().trim();
+
+            if (key.contains(")")) return variableType.get(key.replaceAll("\\)", "")).trim()+")";
+            else if (key.contains("(")) return "(" + variableType.get(key.replaceAll("\\(", "")).trim();
         }
 
-        if (map.get(key) == null) throw new IOException("함수가 존재하지 않습니다.");
-        return map.get(key).toString().trim();
+//        if (map.get(key).getValue() == null) throw new IOException("함수가 존재하지 않습니다.");
+//        return map.get(key).getValue().toString().trim();
+        if (variableType.get(key) == null) throw new IOException("함수가 존재하지 않습니다.");
+        return variableType.get(key).trim();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package main.variable;
 
 import Item.Check;
-import com.sun.security.jgss.GSSUtil;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import main.Setting;
 
@@ -33,9 +32,11 @@ public class VariableGet extends Setting implements Check {
         return total;
     }
 
-    public Object getVariable (@NotNull String text) {
+    public Object getVariable (@NotNull String text) throws IOException {
+        VariableType variableType = new VariableType();
         text = text.trim().replaceAll(":", "").replaceAll(";", "");
-        return Setting.map.get(text);
+//        return Setting.map.get(text).getValue();
+        return variableType.get(text);
     }
 
     private int getPosition (@NotNull String text) {

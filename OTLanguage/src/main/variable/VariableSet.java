@@ -2,17 +2,17 @@ package main.variable;
 
 import Item.Check;
 import Item.TextType;
+import Item.VarItem;
 import activity.Extraction;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import main.Setting;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 public class VariableSet extends Setting implements Check {
+
+    VariableType variableType = new VariableType();
 
     //타입이 변수일때 변수에 값 저장하기
     public void setVariable(String text) throws IOException {
@@ -21,7 +21,9 @@ public class VariableSet extends Setting implements Check {
         for (String t : texts) {
             if (!t.isBlank() && t.trim().endsWith(";") && check(t)) {
                 String key = getKey(text);
-                map.put(key, getValue(text));
+//                map.put(key, new VarItem(variableType.getType(text), getValue(text)));
+                VarItem varItem = variableType.put(key, Objects.requireNonNull(getValue(text)));
+                map.put(key, varItem);
             }
         }
     }
@@ -38,25 +40,10 @@ public class VariableSet extends Setting implements Check {
         text = text.trim();
         text = text.substring(3);
 
-//        if (check(text)) setVariable(text);
-//        if (variableGet.check(text)) text = variableGet.setVariable(text);
         if (extraction.check(text)) text = extraction.extractionNumber(text);
 
         if (text.trim().equals("")) return null;
         return text.trim();
-    }
-
-    //타입 반환
-    private TextType getType(String text) throws IOException {
-        char c = text.replaceAll(" ", "").charAt(1);
-        if (c == 'ㅈ') return TextType.ㅈ;
-        else if (c == 'ㅉ') return TextType.ㅉ;
-        else if (c == 'ㅂ') return TextType.ㅂ;
-        else if (c == 'ㅁ') return TextType.ㅁ;
-        else if (c == 'ㄱ') return TextType.ㄱ;
-        else if (c == 'ㅅ') return TextType.ㅅ;
-        else if (c == 'ㅆ') return TextType.ㅆ;
-        else throw new IOException("타입 오류 발생");
     }
 
     @Override
