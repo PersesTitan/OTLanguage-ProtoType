@@ -31,7 +31,7 @@ public class VariableType extends Setting implements Check {
         else if (textType.equals(TextType.ㅉ)) return new VarItem(getType(type), Long.parseLong(val));
         else if (textType.equals(TextType.ㅂ)) return new VarItem(getType(type), Boolean.parseBoolean(val));
         else if (textType.equals(TextType.ㅁ)) return new VarItem(getType(type), val);
-        else if (textType.equals(TextType.ㄱ)) return new VarItem(getType(type), (Character) value);
+        else if (textType.equals(TextType.ㄱ)) return new VarItem(getType(type), val.charAt(0));
         else if (textType.equals(TextType.ㅅ)) return new VarItem(getType(type), Float.parseFloat(val));
         else if (textType.equals(TextType.ㅆ)) return new VarItem(getType(type), Double.parseDouble(val));
         else throw new IOException("타입 오류 발생");
@@ -39,7 +39,10 @@ public class VariableType extends Setting implements Check {
 
     //타입 반환
     public TextType getType(String text) throws IOException {
-        char c = text.replaceAll(" ", "").charAt(1);
+
+        text = text.trim().replaceAll(":", "").replaceAll(";", "");
+        char c = text.charAt(1);
+
         if (c == 'ㅈ') return TextType.ㅈ;
         else if (c == 'ㅉ') return TextType.ㅉ;
         else if (c == 'ㅂ') return TextType.ㅂ;

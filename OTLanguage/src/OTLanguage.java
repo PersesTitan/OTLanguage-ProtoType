@@ -1,3 +1,4 @@
+import main.For;
 import main.Setting;
 
 import java.io.BufferedReader;
@@ -12,8 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static main.Setting.play;
-import static main.Setting.setForCount;
+import static main.Setting.*;
 
 public class OTLanguage {
 
@@ -65,8 +65,12 @@ public class OTLanguage {
             reader.close();
         }
 
+        For fore = new For();
+
         // totalString
         Setting.map.clear();
+        Setting.forList.clear();
+        fore.saveFor(totalString);
         Setting.list.addAll(Setting.setTrim(Setting.totalString));
 
         System.out.println("===================출력===================");

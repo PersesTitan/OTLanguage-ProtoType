@@ -1,5 +1,6 @@
 package main;
 
+import Item.ForItem;
 import Item.VarItem;
 import activity.ActivityPrint;
 import main.variable.VariableGet;
@@ -24,6 +25,8 @@ public class Setting {
     String totalText;
     public static String totalString;
     public static List<String> list = new ArrayList<>();
+    public static List<ForItem> forList = new ArrayList<>();
+    
     public static volatile Map<String, VarItem> map = new HashMap<>();
 
     public Setting() {}
@@ -36,13 +39,13 @@ public class Setting {
         map.clear();
     }
 
-    public void setTrim() {
-        list.clear();
-        String[] texts = totalText.split("\\n");
-        for (String text : texts) {
-            if (!text.trim().equals("")) list.add(text.trim());
-        }
-    }
+//    public void setTrim() {
+//        list.clear();
+//        String[] texts = totalText.split("\\n");
+//        for (String text : texts) {
+//            if (!text.trim().equals("")) list.add(text.trim());
+//        }
+//    }
 
     public static boolean[] forCountCheck;
     public static String[] forCountText;
@@ -50,13 +53,14 @@ public class Setting {
         play(Setting.list, totalText);
     }
 
+    //입력된 값이 실행됨
     public static void play(List<String> list, String totalText) throws IOException {
         ActivityPrint print = new ActivityPrint();
         VariableSet variableSet = new VariableSet();
         For fore = new For();
 
-        if (fore.check(totalText)) fore.startFor(totalText);
 //        if (fore.check(totalText)) fore.startFor(totalText);
+        if (fore.check(totalText)) fore.saveFor(totalText);
         list.forEach(object -> {
             if (variableSet.check(object)) {
                 try {
@@ -65,6 +69,10 @@ public class Setting {
             } else if (print.check(object)) {
                 try {
                     print.print(object);
+                } catch (IOException ignored) {}
+            } else if (fore.uuidCheck(object)) {
+                try {
+                    fore.playFor(object);
                 } catch (IOException ignored) {}
             }
         });

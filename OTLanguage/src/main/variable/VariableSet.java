@@ -20,8 +20,8 @@ public class VariableSet extends Setting implements Check {
 
         for (String t : texts) {
             if (!t.isBlank() && t.trim().endsWith(";") && check(t)) {
-                String key = getKey(text);
 //                map.put(key, new VarItem(variableType.getType(text), getValue(text)));
+                String key = getKey(text);
                 VarItem varItem = variableType.put(key, Objects.requireNonNull(getValue(text)));
                 map.put(key, varItem);
             }
