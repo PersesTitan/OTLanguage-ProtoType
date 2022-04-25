@@ -31,16 +31,6 @@ public class Setting {
 
     public Setting() {}
 
-    public Setting(String totalText) throws IOException {
-        this.totalText = totalText;
-    }
-
-    public void setReset() {
-        map.clear();
-    }
-
-    public static boolean[] forCountCheck;
-    public static String[] forCountText;
     public static void play(String totalText) throws IOException {
         play(Setting.list, totalText);
     }
@@ -73,12 +63,7 @@ public class Setting {
         int count = 0;
         for (int i = 0; i<Setting.list.size(); i++) {
             if (Setting.list.get(i).trim().startsWith("ㅇㅍㅇ")) count ++;
-        }
-        if (count%2 == 1) throw new IOException("for 문의 짝이 맞지 않습니다.");
-        forCountCheck = new boolean[count/2];
-        forCountText = new String[count/2];
-        Arrays.fill(forCountCheck, false);
-        Arrays.fill(forCountText, "");
+        } if (count%2 == 1) throw new IOException("for 문의 짝이 맞지 않습니다.");
     }
 
 
@@ -95,7 +80,6 @@ public class Setting {
                 if (variableGet.check(text)) stringList.add(variableGet.setVariable(text));
                 else stringList.add(text);
             }
-        }
-        return stringList;
+        } return stringList;
     }
 }

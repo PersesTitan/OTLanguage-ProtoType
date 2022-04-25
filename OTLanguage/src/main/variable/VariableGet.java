@@ -21,21 +21,20 @@ public class VariableGet extends Setting implements Check {
                 //(:ㅇㅅㅇ, :ㅂㅅㅂ)
                 save = save.trim();
                 save = save.replaceAll(";", "")
-                        .replaceAll("\\)", "").replaceAll("\\(", "");
-//                int position = getPosition(total);
+                        .replaceAll("\\)", "")
+                        .replaceAll("\\(", "");
                 int position = total.indexOf(":");
                 //position -> 각각 3, 10
                 String key = total.substring(position+1, position+4);
                 total = total.replace(save, getVariable(key).toString());
             }
-        }
-        return total;
+        } return total;
     }
 
     public Object getVariable (@NotNull String text) throws IOException {
         VariableType variableType = new VariableType();
+
         text = text.trim().replaceAll(":", "").replaceAll(";", "");
-//        return Setting.map.get(text).getValue();
         return variableType.get(text);
     }
 

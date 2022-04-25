@@ -48,22 +48,18 @@ public class ActivityPrint extends Setting implements Check {
         System.out.println(total);
     }
 
-    private Object getValue(String key) throws IOException {
-        VariableType variableType = new VariableType();
-        if (extraction.check(key)) {
-            key = key.replaceAll(";", "");
-//            if (key.contains(")")) return map.get(key.replaceAll("\\)", "")).getValue().toString().trim()+")";
-//            else if (key.contains("(")) return "(" + map.get(key.replaceAll("\\(", "")).getValue().toString().trim();
-
-            if (key.contains(")")) return variableType.get(key.replaceAll("\\)", "")).trim()+")";
-            else if (key.contains("(")) return "(" + variableType.get(key.replaceAll("\\(", "")).trim();
-        }
-
-//        if (map.get(key).getValue() == null) throw new IOException("함수가 존재하지 않습니다.");
-//        return map.get(key).getValue().toString().trim();
-        if (variableType.get(key) == null) throw new IOException("함수가 존재하지 않습니다.");
-        return variableType.get(key).trim();
-    }
+//    private Object getValue(String key) throws IOException {
+//        VariableType variableType = new VariableType();
+//        if (extraction.check(key)) {
+//            key = key.replaceAll(";", "");
+//
+//            if (key.contains(")")) return variableType.get(key.replaceAll("\\)", "")).trim()+")";
+//            else if (key.contains("(")) return "(" + variableType.get(key.replaceAll("\\(", "")).trim();
+//        }
+//
+//        if (variableType.get(key) == null) throw new IOException("함수가 존재하지 않습니다.");
+//        return variableType.get(key).trim();
+//    }
 
     @Override
     public boolean check(String text) {

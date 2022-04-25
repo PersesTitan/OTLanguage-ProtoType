@@ -17,10 +17,8 @@ public class VariableSet extends Setting implements Check {
     //타입이 변수일때 변수에 값 저장하기
     public void setVariable(String text) throws IOException {
         String[] texts = text.split(" ");
-
         for (String t : texts) {
             if (!t.isBlank() && t.trim().endsWith(";") && check(t)) {
-//                map.put(key, new VarItem(variableType.getType(text), getValue(text)));
                 String key = getKey(text);
                 VarItem varItem = variableType.put(key, Objects.requireNonNull(getValue(text)));
                 map.put(key, varItem);

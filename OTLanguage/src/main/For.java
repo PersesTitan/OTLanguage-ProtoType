@@ -22,13 +22,13 @@ public class For implements Check {
 //        String[] TotalTextsReverse = list1.toArray(TotalTexts);
 
         for (String totalText : TotalTexts) {
-            if (!totalText.isBlank() && totalText.contains("ㅇㅍㅇ")) {
+            if (!totalText.isBlank() && totalText.contains("^^")) {
                 totalText = totalText.trim();
                 //for 문 아이디 추출
 //                String text1 =  totalText.substring(0, totalText.lastIndexOf("ㅇㅍㅇ")+3).trim();
 //                String text2 =  totalText.substring(0, text1.length()).trim();
 
-                String text1 =  totalText.substring(0, totalText.indexOf("ㅇㅍㅇ")+3).trim();
+                String text1 =  totalText.substring(0, totalText.indexOf("^^")+2).trim();
                 String text2 =  totalText.substring(0, text1.length()).trim();
 
                 int firstTextPosition = TotalText.indexOf(text1);
@@ -43,6 +43,8 @@ public class For implements Check {
     String totalText = "";
 //    startEndItemList.clear();
     public void saveFor(String TotalText) throws IOException {
+//        go(TotalText);
+
         addStart(TotalText);
         for (StartEndItem startEndItem : startEndItemList) {
             int start = startEndItem.getFirst();
@@ -53,7 +55,7 @@ public class For implements Check {
             String texts = TotalText.substring(start, end);
             List<String> list = Setting.setTrim(texts);
 
-            if (check(list.get(0)) && list.get(0).contains(",")) {
+            if (check(list.get(0)) && list.get(0).contains("^")) {
                 String[] firstText = list.get(0).trim().split(",");
                 if (firstText.length != 3) throw new IOException("ㅇㅍㅇ의 갯수가 틀림니다.");
                 int number_1 = getNumber(firstText[0]);
@@ -104,14 +106,60 @@ public class For implements Check {
         return Integer.parseInt(texts.replaceAll("[^0-9]", ""));
     }
 
-   private int checkPosition() {
-        for (int i = 0; i<Setting.forCountCheck.length; i++) {
-            if (!Setting.forCountCheck[i]) return i;
-        } return 0;
+    //시작하기
+    public void go(String totalText) throws IOException {
+        //처음 저장되는 장소
+        //^^가 없을때까지 돌리기
+        while (checked(totalText)) totalText = getInText(totalText);
+        //아이디 생성
+        String uuid = UUID.randomUUID().toString();
+        //줄바꿈 나누기
+        List<String> list = Setting.setTrim(totalText);
+
+        String[] firstText = list.get(0).trim().split("\\^");
+        if (firstText.length != 3) throw new IOException("ㅇㅍㅇ의 갯수가 틀림니다.");
+        int number_1 = getNumber(firstText[0]);
+        int number_2 = getNumber(firstText[1]);
+        int number_3 = getNumber(firstText[2]);
+
+        this.totalText = "";
+        //ㅇㅍㅇ 삭제
+        list.remove(0);
+        list.remove(list.size()-1);
+        list.forEach(o -> this.totalText += (o + "\n"));
+        //추가 및 저장후 아이디로 변경
+        Setting.forList.add(new ForItem(uuid, totalText, number_1, number_2, number_3));
+        Setting.totalString = Setting.totalString.replace(totalText, uuid);
     }
 
-    private void finish() {
-        Setting.forCountCheck[checkPosition()] = false;
+    //^^안에 있는 값 리턴
+    private String getInText(String TotalText) throws IOException {
+        String[] TotalTexts = TotalText.split("\\n");
+        for (String totalText : TotalTexts) {
+            if (!totalText.isBlank() && totalText.contains("^^")) {
+                totalText = totalText.trim().replaceAll("[0-9]", "");
+                String text1 =  totalText.substring(0, totalText.indexOf("^^")+2).trim();
+                String text2 =  totalText.substring(0, text1.length()).trim();
+
+                int firstTextPosition = TotalText.indexOf(text1);
+                int secondTextPosition = TotalText.lastIndexOf(text2) + text1.length();
+                if (firstTextPosition == secondTextPosition) throw new IOException("ㅇㅍㅇ의 짝이 일치하지 않습니다.");
+                return TotalText.substring(firstTextPosition, secondTextPosition);
+            }
+        } throw new IOException("오류가 발생하였습니다.");
+    }
+
+    //^^가 존재시 true, 아니면 false
+    String total = "";
+    private boolean checked(String texts) {
+        String[] text = texts.split("\\n");
+        List<String> list = new ArrayList<>(Arrays.asList(text));
+        if (list.size()<=1) return false;
+        list.remove(0);
+        list.remove(list.size()-1);
+        total = "";
+        list.forEach(string -> total += string);
+        return total.contains("^^");
     }
 
     boolean bool = false;
@@ -125,6 +173,6 @@ public class For implements Check {
 
     @Override
     public boolean check(String text) {
-        return text.contains("ㅇㅍㅇ");
+        return text.contains("^^");
     }
 }
