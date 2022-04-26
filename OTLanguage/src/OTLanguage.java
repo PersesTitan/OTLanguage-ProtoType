@@ -20,6 +20,7 @@ import static main.Setting.*;
 public class OTLanguage {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static int count = 0;
 
     public static void main(String[] args) throws IOException {
         boolean check = true;
@@ -58,7 +59,7 @@ public class OTLanguage {
             Path path = Paths.get("./" + fileName);
             Charset cs = StandardCharsets.UTF_8;
             List<String> list = Files.readAllLines(path, cs);
-
+            count = 0;
             //1줄씩 읽어오기
             //읽은뒤 변수 값 설정 및 변수 가져오기
             list.forEach(OTLanguage::setDefault);
@@ -69,6 +70,7 @@ public class OTLanguage {
 
             //1줄 씩 읽어오기
             //읽은뒤 변수 값 설정 및 변수 가져오기
+            count = 0;
             while ((readerString = reader.readLine()) != null) setDefault(readerString);
             reader.close();
         }
@@ -89,7 +91,8 @@ public class OTLanguage {
     private static void setDefault(String line) {
         try {
             line = var.getVar(line);
-            var.setVar(line);
+            var.setVar(line, count);
+            count ++;
         } catch (IOException ignored) {}
         Setting.totalString += (line + "\n");
     }
