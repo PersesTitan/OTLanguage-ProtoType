@@ -43,7 +43,7 @@ public class For implements Check {
     String totalText = "";
 //    startEndItemList.clear();
     public void saveFor(String TotalText) throws IOException {
-//        go(TotalText);
+        go(TotalText);
 
         addStart(TotalText);
         for (StartEndItem startEndItem : startEndItemList) {
@@ -106,16 +106,40 @@ public class For implements Check {
         return Integer.parseInt(texts.replaceAll("[^0-9]", ""));
     }
 
+    //
+    public void setTotal() {
+        String total = totalString;
+        String[] lines = total.split("\\n");
+        for (String line : lines) {
+            // 공백 제거, ^^가 없으면 제외
+            if (!line.isBlank() && changeText(line).contains("^^")) {
+                // 0^5^1 형태 가져오기
+                if (!line.trim().contains("^^")) {
+                    String[] texts = line.trim().split(" ");
+                    String text = texts[0];     //
+                    int startPosition =
+                }
+            }
+        }
+    }
+
+    //ㅁ 0^5^1 -> ㅁ ^^
+    private String changeText(String total) {
+        return total.replaceAll("[0-9]", "").trim();
+    }
+
     //시작하기
     public void go(String totalText) throws IOException {
         //처음 저장되는 장소
         //^^가 없을때까지 돌리기
         while (checked(totalText)) totalText = getInText(totalText);
+
         //아이디 생성
         String uuid = UUID.randomUUID().toString();
         //줄바꿈 나누기
         List<String> list = Setting.setTrim(totalText);
 
+        System.out.println("list = " + list);
         String[] firstText = list.get(0).trim().split("\\^");
         if (firstText.length != 3) throw new IOException("ㅇㅍㅇ의 갯수가 틀림니다.");
         int number_1 = getNumber(firstText[0]);
@@ -131,6 +155,7 @@ public class For implements Check {
         Setting.forList.add(new ForItem(uuid, totalText, number_1, number_2, number_3));
         Setting.totalString = Setting.totalString.replace(totalText, uuid);
     }
+
 
     //^^안에 있는 값 리턴
     private String getInText(String TotalText) throws IOException {

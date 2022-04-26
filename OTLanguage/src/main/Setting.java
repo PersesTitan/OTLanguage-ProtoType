@@ -72,6 +72,7 @@ public class Setting {
         VariableSet variableSet = new VariableSet();
 
         List<String> stringList = new ArrayList<>();
+
         String[] texts = totalText.split("\\n");
         for (String text : texts) {
             text = text.trim();
