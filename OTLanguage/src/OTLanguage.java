@@ -1,5 +1,6 @@
 import main.For;
 import main.Setting;
+import main.variable.Var;
 import main.variable.VariableGet;
 
 import java.io.BufferedReader;
@@ -24,8 +25,8 @@ public class OTLanguage {
         boolean check = true;
 
         args = new String[1];
-//        args[0] = "start.otl";
-        args[0] = "main.otl";
+        args[0] = "start.otl";
+//        args[0] = "main.otl";
 
         start(args);
         while (check)  {
@@ -39,8 +40,6 @@ public class OTLanguage {
     private static void start(String[] args) throws IOException {
         String fileName;
         File file;
-
-        VariableGet variableGet = new VariableGet();
 
         Setting.totalString = "";
         //파일 읽기
@@ -59,13 +58,18 @@ public class OTLanguage {
             Path path = Paths.get("./" + fileName);
             Charset cs = StandardCharsets.UTF_8;
             List<String> list = Files.readAllLines(path, cs);
-//            list.forEach(string -> Setting.totalString += (string + "\n"));
-            list.forEach(string -> Setting.totalString += (string + "\n"));
+
+            //1줄씩 읽어오기
+            //읽은뒤 변수 값 설정 및 변수 가져오기
+            list.forEach(OTLanguage::setDefault);
         } else {
             fileName = args[0];
             BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8));
             String readerString;
-            while ((readerString = reader.readLine()) != null) Setting.totalString += (readerString + "\n");
+
+            //1줄 씩 읽어오기
+            //읽은뒤 변수 값 설정 및 변수 가져오기
+            while ((readerString = reader.readLine()) != null) setDefault(readerString);
             reader.close();
         }
 
@@ -79,5 +83,14 @@ public class OTLanguage {
         Setting.list.addAll(Setting.setTrim(Setting.totalString));
         setForCount();
         play(Setting.totalString);
+    }
+
+    private static final Var var = new Var();
+    private static void setDefault(String line) {
+        try {
+            line = var.getVar(line);
+            var.setVar(line);
+        } catch (IOException ignored) {}
+        Setting.totalString += (line + "\n");
     }
 }
