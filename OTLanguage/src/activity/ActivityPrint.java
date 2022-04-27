@@ -33,33 +33,18 @@ public class ActivityPrint extends Setting implements Check {
                 } else list.add(str);
             }
         }
-//        System.out.println("text = " + list);
+
         total = "";
         list.remove(0);
         list.forEach(object -> total += (object + " "));
 
-//        if (variableSet.check(total)) variableSet.setVariable(total);
         //변수나 상수를 숫자로 치환시킴
         if (variableGet.check(total)) total = variableGet.setVariable(total);
-//        System.out.println("object = " + total);
         //계산이 존재할 시 계산을 진행함
         if (extraction.check(total)) total = extraction.extractionNumber(total);
 
         System.out.println(total);
     }
-
-//    private Object getValue(String key) throws IOException {
-//        VariableType variableType = new VariableType();
-//        if (extraction.check(key)) {
-//            key = key.replaceAll(";", "");
-//
-//            if (key.contains(")")) return variableType.get(key.replaceAll("\\)", "")).trim()+")";
-//            else if (key.contains("(")) return "(" + variableType.get(key.replaceAll("\\(", "")).trim();
-//        }
-//
-//        if (variableType.get(key) == null) throw new IOException("함수가 존재하지 않습니다.");
-//        return variableType.get(key).trim();
-//    }
 
     @Override
     public boolean check(String text) {
