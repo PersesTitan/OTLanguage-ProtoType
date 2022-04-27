@@ -25,8 +25,8 @@ public class OTLanguage {
     public static void main(String[] args) throws IOException {
         boolean check = true;
 
-        args = new String[1];
-        args[0] = "start.otl";
+//        args = new String[1];
+//        args[0] = "start.otl";
 //        args[0] = "main.otl";
 
         start(args);
