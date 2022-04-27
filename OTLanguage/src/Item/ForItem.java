@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class ForItem {
-    String id;
+//    String id;
     String value;
     int number_1;
     int number_2;

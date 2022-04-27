@@ -25,24 +25,24 @@ public class Setting {
     String totalText;
     public static String totalString;
     public static List<String> list = new ArrayList<>();
-    public static List<ForItem> forList = new ArrayList<>();
-
+//    public static List<ForItem> forList = new ArrayList<>();
+    public static Map<String, ForItem> forMap = new HashMap<>();
     public static volatile Map<String, VarItem> map = new HashMap<>();
 
     public Setting() {}
 
-    public static void play(String totalText) throws IOException {
-        play(Setting.list, totalText);
+    public static void play() {
+        play(Setting.list);
     }
 
-    //입력된 값이 실행됨
-    public static void play(List<String> list, String totalText) throws IOException {
+//    //입력된 값이 실행됨
+    public static void play(List<String> list) {
         ActivityPrint print = new ActivityPrint();
         VariableSet variableSet = new VariableSet();
         For fore = new For();
 
-        if (fore.check(totalText)) fore.saveFor(totalText);
         list.forEach(object -> {
+//            System.out.println("object = " + object.trim());
             if (variableSet.check(object)) {
                 try {
                     variableSet.setVariable(object);
@@ -51,10 +51,8 @@ public class Setting {
                 try {
                     print.print(object);
                 } catch (IOException ignored) {}
-            } else if (fore.uuidCheck(object)) {
-                try {
-                    fore.playFor(object);
-                } catch (IOException ignored) {}
+            } else if (fore.checkText(object)) {
+                fore.start(object.trim());
             }
         });
     }

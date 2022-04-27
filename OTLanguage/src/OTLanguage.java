@@ -67,24 +67,24 @@ public class OTLanguage {
             fileName = args[0];
             BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8));
             String readerString;
-
             //1줄 씩 읽어오기
             //읽은뒤 변수 값 설정 및 변수 가져오기
             count = 0;
             while ((readerString = reader.readLine()) != null) setDefault(readerString);
             reader.close();
         }
-
-        For fore = new For();
         // totalString
         Setting.map.clear();
-        Setting.forList.clear();
-        fore.saveFor(totalString);
+        forMap.clear();
+
+        For fore = new For();
+        //^^ 문을 전용 아이디로 치환시킴
+        while(fore.check(totalString)) totalString = fore.loop(totalString);
 
         System.out.println("===================출력===================");
         Setting.list.addAll(Setting.setTrim(Setting.totalString));
         setForCount();
-        play(Setting.totalString);
+        play();
     }
 
     private static final Var var = new Var();
