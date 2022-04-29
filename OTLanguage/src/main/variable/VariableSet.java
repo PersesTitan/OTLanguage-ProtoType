@@ -1,7 +1,6 @@
 package main.variable;
 
 import Item.Check;
-import Item.TextType;
 import Item.VarItem;
 import activity.Extraction;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
