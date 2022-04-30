@@ -7,6 +7,11 @@
 ## 사용방법 
 ###### 추가됨 - V0
 
+[모든 버전 다운로드](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/PersesTitan/OTLanguage/tree/master/EXEFile)</br>
+[V0 버전 다운로드](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/PersesTitan/OTLanguage/tree/master/EXEFile/V0)</br>
+[V1 버전 다운로드](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/PersesTitan/OTLanguage/tree/master/EXEFile/V1)</br>
+[V2 버전 다운로드](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/PersesTitan/OTLanguage/tree/master/EXEFile/V2)</br>
+
 </br>EXEFile로 가신뒤 다운받을 버전을 들어간뒤 exe파일을 다운받으면 됩니다.</br>
 
 실행 방법은 2가지가 있습니다.</br>
