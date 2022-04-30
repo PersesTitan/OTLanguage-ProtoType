@@ -5,7 +5,7 @@ import Item.Check;
 public class Print implements Check {
 
     public void setPrint(String text) {
-        text = text.trim();
+        text = text.strip();
         if (text.startsWith(":")) {
 
         }

@@ -52,7 +52,7 @@ public class Setting {
                     print.print(object);
                 } catch (IOException ignored) {}
             } else if (fore.checkText(object)) {
-                fore.start(object.trim());
+                fore.start(object.strip());
             }
         });
     }
@@ -60,7 +60,7 @@ public class Setting {
     public static void setForCount() throws IOException {
         int count = 0;
         for (int i = 0; i<Setting.list.size(); i++) {
-            if (Setting.list.get(i).trim().startsWith("ㅇㅍㅇ")) count ++;
+            if (Setting.list.get(i).strip().startsWith("ㅇㅍㅇ")) count ++;
         } if (count%2 == 1) throw new IOException("for 문의 짝이 맞지 않습니다.");
     }
 
@@ -73,7 +73,7 @@ public class Setting {
 
         String[] texts = totalText.split("\\n");
         for (String text : texts) {
-            text = text.trim();
+            text = text.strip();
             if (!text.isBlank()) {
                 variableSet.setVariable(text);
                 if (variableGet.check(text)) stringList.add(variableGet.setVariable(text));

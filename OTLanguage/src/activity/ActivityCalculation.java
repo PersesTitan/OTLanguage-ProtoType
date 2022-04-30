@@ -12,29 +12,21 @@ public class ActivityCalculation implements Check {
     public void varCal(String line) {
 
     }
-    /**
-     * @param ㅇㅈㅇ (정수) int
-     * @param ㅇㅉㅇ (정수) long
-     * @param ㅇㅂㅇ (블린) boolean
-     * @param ㅇㅁㅇ (문자) String
-     * @param ㅇㄱㅇ (글자) char
-     * @param ㅇㅅㅇ (실수) float
-     * @param ㅇㅆㅇ (실수) double
-     */
-    private String numberType(String line) {
 
-    }
+//    private String numberType(String line) {
+//
+//    }
 
     //계산하는 메소드
     private int calculation(String line) {
         //(100 + (1234 * 22))
-        line = line.trim();
+        line = line.strip();
         int startPosition = line.indexOf(")") + 1;
         int endPosition = line.lastIndexOf("(");
         //(1234 * 22) 출력
         String numbers = line.substring(startPosition, endPosition);
 
-
+        return 0;
     }
 
     //숫자를 제외한 나머지 문자가 존재하는지 확인함

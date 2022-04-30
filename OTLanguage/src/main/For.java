@@ -19,7 +19,7 @@ public class For implements Check {
         String[] lines = totalText.split("\\n");
         for (String line : lines) {
             if (!line.isBlank() && isCheck(line) != null) {
-                start = line.trim();
+                start = line.strip();
                 end = isCheck(line);
                 break;
             }
@@ -42,7 +42,7 @@ public class For implements Check {
             lines = totalText.split("\\n");
             for (String line : lines) {
                 if (!line.isBlank() && isCheck(line) != null) {
-                    start = line.trim();
+                    start = line.strip();
                     end = isCheck(line);
                 }
             }
@@ -78,23 +78,23 @@ public class For implements Check {
 
     //코드에 ^^가 존재할때 true 반환
     private boolean check(String start, String end, String total) {
-        total = total.replace(start, "").replace(end, "").trim();
+        total = total.replace(start, "").replace(end, "").strip();
         return total.contains("^^");
     }
 
     //line 이 ㅁ 0^2^1형태인지 확인
     //마지막이 ^^이 아니면 null 반환
     private String isCheck(String line) {
-        if (line.trim().endsWith("^^")) return null;
+        if (line.strip().endsWith("^^")) return null;
 
-        line = line.replaceAll("[0-9]", "").trim();
+        line = line.replaceAll("[0-9]", "").strip();
         if (line.endsWith("^^") && line.length()>3) return line; //아이디 + ^^ 출력
         else return null;
     }
 
     //리스트에 존재할때 ture
     public boolean checkText(String line) {
-        return Setting.forMap.get(line.trim()) != null;
+        return Setting.forMap.get(line.strip()) != null;
     }
 
     @Override

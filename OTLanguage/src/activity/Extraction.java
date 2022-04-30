@@ -85,7 +85,7 @@ public class Extraction implements Check {
 
         double d = Double.parseDouble(number.get(0));
         for (int i=0; i<text.size(); i++) {
-            String sign = text.get(i).trim();
+            String sign = text.get(i).strip();
             double signValue = Double.parseDouble(number.get(i + 1));
 
             switch (sign) {

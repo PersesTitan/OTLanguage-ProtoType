@@ -20,9 +20,9 @@ public class Var {
                 if (end>2 && start>=0 && check(text.charAt(start))) {
 
                     String key = text.substring(start-1, end);    //출력) ㅇㅅㅇ
-                    String value = line.substring(end+2).trim();    //== line.replaceAll(key+";") , 값 출력
+                    String value = line.substring(end+2).strip();    //== line.replaceAll(key+";") , 값 출력
                     //넣을 값이 변수 일 경우 치환시키기
-                    Setting.map.put(key, new VarItem(getTextType(key.trim().charAt(1)), getVar(value)));
+                    Setting.map.put(key, new VarItem(getTextType(key.strip().charAt(1)), getVar(value)));
                     printError(key, value, count+1);       //타입이 다를경우 경고함
 //                    System.out.println("==============");
 //                    System.out.println("key = " + key);
@@ -54,7 +54,7 @@ public class Var {
 
     //변수에 값 넣을때 타입 불일치 할때 에러 출력
     public void printError(String key, Object value, int line) {
-        char c = key.trim().charAt(1);
+        char c = key.strip().charAt(1);
         if (value instanceof Integer && c=='ㅈ') System.err.println(line + "번 째 줄 타입 경고");
         if (value instanceof Long && c=='ㅉ') System.err.println(line + "번 째 줄 타입 경고");
         if (value instanceof Boolean && c=='ㅂ') System.err.println(line + "번 째 줄 타입 경고");

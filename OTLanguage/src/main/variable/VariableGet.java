@@ -19,7 +19,7 @@ public class VariableGet extends Setting implements Check {
             if (!save.isBlank() && check(save)) {
 
                 //(:ㅇㅅㅇ, :ㅂㅅㅂ)
-                save = save.trim();
+                save = save.strip();
                 save = save.replaceAll(";", "")
                         .replaceAll("\\)", "")
                         .replaceAll("\\(", "");
@@ -34,7 +34,7 @@ public class VariableGet extends Setting implements Check {
     public Object getVariable (@NotNull String text) throws IOException {
         VariableType variableType = new VariableType();
 
-        text = text.trim().replaceAll(":", "").replaceAll(";", "");
+        text = text.strip().replaceAll(":", "").replaceAll(";", "");
         return variableType.get(text);
     }
 

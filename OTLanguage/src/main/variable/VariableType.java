@@ -25,7 +25,7 @@ public class VariableType extends Setting implements Check {
     VariableGet variableGet = new VariableGet();
     public VarItem put(String type, Object value) throws IOException {
         TextType textType = getType(type);
-        String val = value.toString().trim();
+        String val = value.toString().strip();
         if (variableGet.check(val)) val = variableGet.setVariable(val);
         if (textType.equals(TextType.ㅈ)) return new VarItem(getType(type), val);
         else if (textType.equals(TextType.ㅉ)) return new VarItem(getType(type), val);
@@ -40,7 +40,7 @@ public class VariableType extends Setting implements Check {
     //타입 반환
     private TextType getType(String text) throws IOException {
 
-        text = text.trim().replaceAll(":", "").replaceAll(";", "");
+        text = text.strip().replaceAll(":", "").replaceAll(";", "");
         char c = text.charAt(1);
 
         if (c == 'ㅈ') return TextType.ㅈ;

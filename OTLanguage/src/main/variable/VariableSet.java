@@ -17,7 +17,7 @@ public class VariableSet extends Setting implements Check {
     public void setVariable(String text) throws IOException {
         String[] texts = text.split(" ");
         for (String t : texts) {
-            if (!t.isBlank() && t.trim().endsWith(";") && check(t)) {
+            if (!t.isBlank() && t.strip().endsWith(";") && check(t)) {
                 String key = getKey(text);
                 VarItem varItem = variableType.put(key, Objects.requireNonNull(getValue(text)));
                 map.put(key, varItem);
@@ -26,7 +26,7 @@ public class VariableSet extends Setting implements Check {
     }
 
     private String getKey(@NotNull String text) {
-        text = text.trim();
+        text = text.strip();
         return text.substring(0, 3);
     }
 
@@ -34,13 +34,13 @@ public class VariableSet extends Setting implements Check {
     Extraction extraction = new Extraction();
     private Object getValue(@NotNull String text) throws IOException {
         text = text.replaceAll(";", "");
-        text = text.trim();
+        text = text.strip();
         text = text.substring(3);
 
         if (extraction.check(text)) text = extraction.extractionNumber(text);
 
-        if (text.trim().equals("")) return null;
-        return text.trim();
+        if (text.strip().equals("")) return null;
+        return text.strip();
     }
 
     @Override

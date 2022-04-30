@@ -12,7 +12,7 @@ public class SearchType implements Check {
     public void getType(@NotNull String oneLine) {
         String[] words = oneLine.split(" ");
         List<String> list = new ArrayList<>();
-        for (String word : words) list.add(word.trim().replaceAll("[;|:]", ""));
+        for (String word : words) list.add(word.strip().replaceAll("[;|:]", ""));
     }
 
 
